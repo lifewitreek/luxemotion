@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Digital Products Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #1a1a1a;
+    --border: #2a2a2a;
+    --accent: #7c3aed;
+    --accent2: #a855f7;
+    --gold: #f59e0b;
+    --text: #f0f0f0;
+    --muted: #888;
+    --success: #22c55e;
+    --danger: #ef4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── STOREFRONT ─────────────────────────────────── */
+
+  .store-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* Announcement bar */
+  #announcement-bar {
+    background: var(--accent);
+    text-align: center;
+    padding: 10px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 60px 24px 40px;
+    position: relative;
+  }
+
+  .exclusive-badge {
+    display: inline-block;
+    border: 1.5px solid var(--text);
+    border-radius: 999px;
+    padding: 8px 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.95;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #fff 0%, #c084fc 60%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Product section */
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    padding: 40px 0 80px;
+  }
+
+  @media (max-width: 768px) {
+    .product-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  /* Gallery */
+  .gallery { display: flex; flex-direction: column; gap: 12px; }
+
+  .main-image-wrap {
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg3);
+    aspect-ratio: 4/3;
+    position: relative;
+  }
+
+  #main-product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .main-image-wrap:hover #main-product-img { transform: scale(1.03); }
+
+  .thumbnails {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .thumb {
+    width: 80px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+    background: var(--bg3);
+  }
+
+  .thumb.active { border-color: var(--accent2); }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* Product info */
+  .product-info { padding-top: 8px; }
+
+  .brand-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 12px;
+  }
+
+  .product-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .price-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .price-original {
+    font-size: 18px;
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+
+  .price-current {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--text);
+  }
+
+  .sale-badge {
+    background: var(--accent);
+    color: white;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .product-desc {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .qty-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .qty-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .qty-ctrl {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .qty-btn {
+    background: var(--bg3);
+    border: none;
+    color: var(--text);
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .qty-btn:hover { background: var(--border); }
+
+  #qty-val {
+    width: 48px;
+    text-align: center;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    pointer-events: none;
+  }
+
+  .cta-btn {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    border-radius: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  #add-to-cart-btn {
+    background: #fff;
+    color: #000;
+    margin-bottom: 12px;
+  }
+
+  #add-to-cart-btn:hover { background: #e5e5e5; transform: translateY(-2px); }
+
+  #buy-now-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  #buy-now-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+  .payment-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* Stars */
+  .stars { color: var(--gold); font-size: 18px; margin-bottom: 8px; }
+
+  /* Features section */
+  .section { padding: 80px 24px; }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 7vw, 80px);
+    text-align: center;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 30%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-sub {
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 56px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .feature-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .feature-card:hover { border-color: var(--accent2); transform: translateY(-4px); }
+
+  .feature-icon { font-size: 32px; margin-bottom: 14px; }
+
+  .feature-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .feature-desc { color: var(--muted); font-size: 14px; line-height: 1.65; }
+
+  /* Testimonials */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .testimonial-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .testimonial-stars { color: var(--gold); font-size: 14px; margin-bottom: 12px; }
+
+  .testimonial-text { font-size: 14px; line-height: 1.65; margin-bottom: 16px; color: #ccc; }
+
+  .testimonial-author { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent2); letter-spacing: 1px; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  #footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--text); margin-bottom: 8px; }
+
+  /* ── ADMIN TOGGLE ──────────────────────────────── */
+
+  #admin-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 900;
+    transition: all 0.2s;
+    color: var(--muted);
+  }
+
+  #admin-toggle:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  /* ── ADMIN OVERLAY ─────────────────────────────── */
+
+  #admin-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+  }
+
+  #admin-overlay.open { display: flex; }
+
+  .admin-modal {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 40px;
+    position: relative;
+  }
+
+  .admin-modal::-webkit-scrollbar { width: 6px; }
+  .admin-modal::-webkit-scrollbar-track { background: var(--bg); }
+  .admin-modal::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .admin-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .admin-close:hover { color: var(--text); }
+
+  .admin-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+
+  .admin-subtitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  /* Login form */
+  #login-section { }
+
+  .field-group { margin-bottom: 20px; }
+
+  .field-label {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .field-input {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .field-input:focus { border-color: var(--accent2); }
+
+  textarea.field-input { resize: vertical; min-height: 80px; }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  @media (max-width: 500px) { .field-row { grid-template-columns: 1fr; } }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 28px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    width: 100%;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  #login-error {
+    color: var(--danger);
+    font-size: 13px;
+    margin-top: 8px;
+    display: none;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* Admin panel */
+  #panel-section { display: none; }
+
+  .admin-section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin: 28px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .admin-section-title:first-child { margin-top: 0; }
+
+  .feature-admin-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .feature-admin-item .field-row { grid-template-columns: 1fr 2fr; gap: 12px; margin-bottom: 8px; }
+
+  .remove-btn {
+    background: none;
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    transition: all 0.2s;
+  }
+
+  .remove-btn:hover { background: var(--danger); color: white; }
+
+  .add-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+
+  .add-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  .save-banner {
+    background: var(--success);
+    color: #000;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    display: none;
+  }
+
+  .logout-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    transition: all 0.2s;
+    float: right;
+    margin-top: -48px;
+  }
+
+  .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+  .thumbnail-admin {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+
+  .thumb-admin-item {
+    position: relative;
+    width: 80px;
+  }
+
+  .thumb-admin-item input {
+    width: 100%;
+    font-size: 10px;
+    padding: 4px 6px;
+    margin-top: 4px;
+  }
+
+  .thumb-preview {
+    width: 80px;
+    height: 60px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: block;
+  }
+
+  .thumb-remove {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 18px;
+    height: 18px;
+    background: var(--danger);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  /* Color picker row */
+  .color-row { display: flex; gap: 12px; align-items: center; }
+  input[type="color"] {
+    width: 40px; height: 40px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+    padding: 2px;
+  }
+
+  /* Toast */
+  #toast {
+    position: fixed;
+    bottom: 80px;
+    right: 24px;
+    background: var(--success);
+    color: #000;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    z-index: 9999;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  #toast.show { transform: translateY(0); opacity: 1; }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 60px 0 0; }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- Announcement -->
+<div id="announcement-bar">🔥 <span id="announcement-text">LIMITED TIME OFFER — SAVE BIG TODAY</span></div>
+
+<!-- Storefront -->
+<div class="store-wrap">
+
+  <!-- Hero -->
+  <div class="hero reveal">
+    <div class="exclusive-badge" id="hero-badge">EXCLUSIVE OFFER</div>
+    <h1 class="hero-title" id="hero-title">My Digital<br>Product Bundle</h1>
+    <p class="hero-sub" id="hero-sub">ACCESS LIFETIME UPDATES. SAVE TIME & LEVEL UP.</p>
+  </div>
+
+  <!-- Product grid -->
+  <div class="product-grid store-wrap">
+    <!-- Gallery -->
+    <div class="gallery reveal">
+      <div class="main-image-wrap">
+        <img id="main-product-img" src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80" alt="Product">
+      </div>
+      <div class="thumbnails" id="thumbnails-row"></div>
+    </div>
+
+    <!-- Info -->
+    <div class="product-info reveal">
+      <div class="brand-label" id="brand-label">THE BRAND</div>
+      <div class="stars">★★★★★</div>
+      <h2 class="product-name" id="product-name">My Digital Product</h2>
+
+      <div class="price-row">
+        <span class="price-original" id="price-original">$197.00 USD</span>
+        <span class="price-current" id="price-current">$97.00 USD</span>
+        <span class="sale-badge" id="sale-badge">SALE</span>
+      </div>
+
+      <p class="product-desc" id="product-desc">
+        Get everything you need in one complete bundle. Built for creators who are serious about leveling up their workflow and growing faster.
+      </p>
+
+      <div class="qty-row">
+        <span class="qty-label">Qty</span>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <span id="qty-val">1</span>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+      </div>
+
+      <a id="add-to-cart-btn" href="#" class="cta-btn" target="_blank">ADD TO CART</a>
+      <a id="buy-now-btn" href="#" class="cta-btn" target="_blank">BUY NOW — INSTANT ACCESS</a>
+      <p class="payment-note" id="payment-note">🔒 Secure checkout · Instant digital delivery</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Why Bundle section -->
+  <div class="section reveal">
+    <h2 class="section-title" id="why-title">Why Bundle?</h2>
+    <p class="section-sub" id="why-sub">ACCESS THE FULL SYSTEM — NOT JUST PARTS OF IT</p>
+    <div class="features-grid" id="features-grid"></div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Testimonials -->
+  <div class="section reveal">
+    <h2 class="section-title" id="testimonials-title">What They're Saying</h2>
+    <p class="section-sub">REAL RESULTS FROM REAL PEOPLE</p>
+    <div class="testimonials-grid" id="testimonials-grid"></div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div id="footer-brand">MY BRAND</div>
+  <p id="footer-text">© 2026 All rights reserved. Digital product — instant delivery.</p>
+</footer>
+
+<!-- Admin toggle -->
+<button id="admin-toggle" onclick="openAdmin()" title="Admin">⚙️</button>
+
+<!-- Toast -->
+<div id="toast">✓ Changes saved!</div>
+
+<!-- Admin overlay -->
+<div id="admin-overlay">
+  <div class="admin-modal">
+    <button class="admin-close" onclick="closeAdmin()">✕</button>
+
+    <!-- LOGIN -->
+    <div id="login-section">
+      <div class="admin-title">ADMIN LOGIN</div>
+      <div class="admin-subtitle">Enter your password to manage your store</div>
+
+      <div class="field-group">
+        <label class="field-label">Password</label>
+        <input class="field-input" type="password" id="pw-input" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') doLogin()">
+      </div>
+      <button class="btn-primary" onclick="doLogin()">SIGN IN</button>
+      <div id="login-error">⚠ Incorrect password. Try again.</div>
+      <p style="color:var(--muted);font-size:12px;margin-top:16px;font-family:'Space Mono',monospace;">Default password: <strong style="color:var(--accent2)">admin123</strong> — change it in the panel.</p>
+    </div>
+
+    <!-- PANEL -->
+    <div id="panel-section">
+      <div class="admin-title">STORE EDITOR</div>
+      <div class="admin-subtitle">Edit everything below — changes save instantly</div>
+      <button class="logout-btn" onclick="doLogout()">SIGN OUT</button>
+
+      <!-- General -->
+      <div class="admin-section-title">General</div>
+
+      <div class="field-group">
+        <label class="field-label">Page / Tab Title</label>
+        <input class="field-input" id="a-page-title" type="text" oninput="liveUpdate()">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Announcement Bar Text</label>
+        <input class="field-input" id="a-announcement" type="text" oninput="liveUpdate()">
+      </div>
+
+      <!-- Hero -->
+      <div class="admin-section-title">Hero Section</div>
+
+      <div class="field-group">
+        <label class="field-label">Badge Text</label>
+        <input class="field-input" id="a-badge" type="text" oninput="liveUpdate()">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Main Headline (use \n for line break)</label>
+        <input class="field-input" id="a-title" type="text" oninput="liveUpdate()">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Subheadline</label>
+        <input class="field-input" id="a-sub" type="text" oninput="liveUpdate()">
+      </div>
+
+      <!-- Product -->
+      <div class="admin-section-title">Product Info</div>
+
+      <div class="field-group">
+        <label class="field-label">Brand Label</label>
+        <input class="field-input" id="a-brand" type="text" oninput="liveUpdate()">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Product Name</label>
+        <input class="field-input" id="a-pname" type="text" oninput="liveUpdate()">
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Original Price</label>
+          <input class="field-input" id="a-orig-price" type="text" oninput="liveUpdate()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Sale Price</label>
+          <input class="field-input" id="a-sale-price" type="text" oninput="liveUpdate()">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Sale Badge Text</label>
+          <input class="field-input" id="a-sale-badge" type="text" oninput="liveUpdate()">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Product Description</label>
+        <textarea class="field-input" id="a-desc" oninput="liveUpdate()"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Payment / Trust Note</label>
+        <input class="field-input" id="a-payment-note" type="text" oninput="liveUpdate()">
+      </div>
+
+      <!-- Buttons -->
+      <div class="admin-section-title">Button Links</div>
+
+      <div class="field-group">
+        <label class="field-label">Add to Cart Button Text</label>
+        <input class="field-input" id="a-cart-text" type="text" oninput="liveUpdate()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Add to Cart URL</label>
+        <input class="field-input" id="a-cart-url" type="url" placeholder="https://" oninput="liveUpdate()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Buy Now Button Text</label>
+        <input class="field-input" id="a-buy-text" type="text" oninput="liveUpdate()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Buy Now URL</label>
+        <input class="field-input" id="a-buy-url" type="url" placeholder="https://" oninput="liveUpdate()">
+      </div>
+
+      <!-- Images -->
+      <div class="admin-section-title">Product Images</div>
+
+      <div class="field-group">
+        <label class="field-label">Main Image URL</label>
+        <input class="field-input" id="a-main-img" type="url" placeholder="https://..." oninput="liveUpdate()">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Thumbnail Images</label>
+        <div class="thumbnail-admin" id="thumb-admin-list"></div>
+        <button class="add-btn" onclick="addThumb()">+ Add Thumbnail</button>
+      </div>
+
+      <!-- Features -->
+      <div class="admin-section-title">Feature Cards (Why Bundle)</div>
+
+      <div class="field-group">
+        <label class="field-label">Section Title</label>
+        <input class="field-input" id="a-why-title" type="text" oninput="liveUpdate()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Section Subtitle</label>
+        <input class="field-input" id="a-why-sub" type="text" oninput="liveUpdate()">
+      </div>
+
+      <div id="features-admin"></div>
+      <button class="add-btn" onclick="addFeature()">+ Add Feature Card</button>
+
+      <!-- Testimonials -->
+      <div class="admin-section-title">Testimonials</div>
+
+      <div class="field-group">
+        <label class="field-label">Section Title</label>
+        <input class="field-input" id="a-test-title" type="text" oninput="liveUpdate()">
+      </div>
+
+      <div id="testimonials-admin"></div>
+      <button class="add-btn" onclick="addTestimonial()">+ Add Testimonial</button>
+
+      <!-- Footer -->
+      <div class="admin-section-title">Footer</div>
+
+      <div class="field-group">
+        <label class="field-label">Brand Name</label>
+        <input class="field-input" id="a-footer-brand" type="text" oninput="liveUpdate()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Footer Text</label>
+        <input class="field-input" id="a-footer-text" type="text" oninput="liveUpdate()">
+      </div>
+
+      <!-- Password -->
+      <div class="admin-section-title">Security</div>
+
+      <div class="field-group">
+        <label class="field-label">Change Admin Password</label>
+        <input class="field-input" id="a-new-pw" type="password" placeholder="New password">
+      </div>
+      <button class="btn-primary" style="margin-bottom:8px;" onclick="saveAll()">💾 SAVE ALL CHANGES</button>
+      <div class="save-banner" id="save-banner">✓ All changes saved successfully!</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Default data ──────────────────────────────────────────────────────────────
+const DEFAULT = {
+  password: "admin123",
+  pageTitle: "My Digital Products Store",
+  announcement: "🔥 LIMITED TIME OFFER — SAVE BIG TODAY",
+  badge: "EXCLUSIVE OFFER",
+  heroTitle: "My Digital\nProduct Bundle",
+  heroSub: "ACCESS LIFETIME UPDATES. SAVE TIME & LEVEL UP.",
+  brand: "THE BRAND",
+  productName: "My Digital Product",
+  origPrice: "$197.00 USD",
+  salePrice: "$97.00 USD",
+  saleBadge: "SALE",
+  desc: "Get everything you need in one complete bundle. Built for creators who are serious about leveling up their workflow and growing faster.",
+  paymentNote: "🔒 Secure checkout · Instant digital delivery",
+  cartText: "ADD TO CART",
+  cartUrl: "#",
+  buyText: "BUY NOW — INSTANT ACCESS",
+  buyUrl: "#",
+  mainImg: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80",
+  thumbs: [
+    "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=300&q=80",
+    "https://images.unsplash.com/photo-1611532736573-418eb6e65e49?w=300&q=80",
+    "https://images.unsplash.com/photo-1611532736504-ab9246f335aa?w=300&q=80"
+  ],
+  whyTitle: "Why Bundle?",
+  whySub: "ACCESS THE FULL SYSTEM — NOT JUST PARTS OF IT",
+  features: [
+    { icon: "⚡", title: "SAVE HOURS", desc: "Everything is done-for-you. Stop starting from scratch and plug straight into the system." },
+    { icon: "🎯", title: "PROVEN RESULTS", desc: "Used by thousands of creators to grow faster and produce better content." },
+    { icon: "♾️", title: "LIFETIME ACCESS", desc: "Pay once and own it forever. All future updates included at no extra cost." },
+    { icon: "🔥", title: "FULL SYSTEM", desc: "Get the complete toolkit, not just bits and pieces. Everything works together." }
+  ],
+  testimonialsTitle: "What They're Saying",
+  testimonials: [
+    { text: "This changed how I edit entirely. I went from spending 4 hours on a video to under 90 minutes. Absolutely worth it.", author: "— @mikecreates" },
+    { text: "Honestly the best investment I've made this year. The templates alone saved me so much time.", author: "— @sarahj.media" },
+    { text: "Bought the bundle skeptically and now I recommend it to everyone in my network. No brainer.", author: "— @thedavid_c" }
+  ],
+  footerBrand: "MY BRAND",
+  footerText: "© 2026 All rights reserved. Digital product — instant delivery."
+};
+
+// ── Load from localStorage or defaults ───────────────────────────────────────
+function loadData() {
+  try {
+    const saved = localStorage.getItem("store_data");
+    return saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT));
+  } catch(e) { return JSON.parse(JSON.stringify(DEFAULT)); }
+}
+
+let D = loadData();
+let qty = 1;
+let loggedIn = false;
+
+// ── Render storefront ─────────────────────────────────────────────────────────
+function renderStore() {
+  document.title = D.pageTitle;
+  document.getElementById("page-title").textContent = D.pageTitle;
+  document.getElementById("announcement-text").textContent = D.announcement;
+  document.getElementById("hero-badge").textContent = D.badge;
+  document.getElementById("hero-title").innerHTML = D.heroTitle.replace(/\n/g, "<br>");
+  document.getElementById("hero-sub").textContent = D.heroSub;
+  document.getElementById("brand-label").textContent = D.brand;
+  document.getElementById("product-name").textContent = D.productName;
+  document.getElementById("price-original").textContent = D.origPrice;
+  document.getElementById("price-current").textContent = D.salePrice;
+  document.getElementById("sale-badge").textContent = D.saleBadge;
+  document.getElementById("product-desc").textContent = D.desc;
+  document.getElementById("payment-note").textContent = D.paymentNote;
+  document.getElementById("add-to-cart-btn").textContent = D.cartText;
+  document.getElementById("add-to-cart-btn").href = D.cartUrl || "#";
+  document.getElementById("buy-now-btn").textContent = D.buyText;
+  document.getElementById("buy-now-btn").href = D.buyUrl || "#";
+  document.getElementById("main-product-img").src = D.mainImg;
+  document.getElementById("why-title").textContent = D.whyTitle;
+  document.getElementById("why-sub").textContent = D.whySub;
+  document.getElementById("testimonials-title").textContent = D.testimonialsTitle;
+  document.getElementById("footer-brand").textContent = D.footerBrand;
+  document.getElementById("footer-text").textContent = D.footerText;
+
+  // Thumbnails
+  const thumbRow = document.getElementById("thumbnails-row");
+  thumbRow.innerHTML = "";
+  D.thumbs.forEach((url, i) => {
+    const d = document.createElement("div");
+    d.className = "thumb" + (i === 0 ? " active" : "");
+    d.innerHTML = `<img src="${url}" alt="thumb ${i+1}" onerror="this.style.opacity=0.3">`;
+    d.onclick = () => {
+      document.getElementById("main-product-img").src = url;
+      document.querySelectorAll(".thumb").forEach(t => t.classList.remove("active"));
+      d.classList.add("active");
+    };
+    thumbRow.appendChild(d);
+  });
+
+  // Features
+  const fg = document.getElementById("features-grid");
+  fg.innerHTML = "";
+  D.features.forEach(f => {
+    fg.innerHTML += `
+      <div class="feature-card">
+        <div class="feature-icon">${f.icon}</div>
+        <div class="feature-title">${f.title}</div>
+        <div class="feature-desc">${f.desc}</div>
+      </div>`;
+  });
+
+  // Testimonials
+  const tg = document.getElementById("testimonials-grid");
+  tg.innerHTML = "";
+  D.testimonials.forEach(t => {
+    tg.innerHTML += `
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-text">"${t.text}"</div>
+        <div class="testimonial-author">${t.author}</div>
+      </div>`;
+  });
+}
+
+// ── Quantity ──────────────────────────────────────────────────────────────────
+function changeQty(delta) {
+  qty = Math.max(1, qty + delta);
+  document.getElementById("qty-val").textContent = qty;
+}
+
+// ── Admin open/close ──────────────────────────────────────────────────────────
+function openAdmin() {
+  document.getElementById("admin-overlay").classList.add("open");
+  if (!loggedIn) {
+    document.getElementById("login-section").style.display = "block";
+    document.getElementById("panel-section").style.display = "none";
+    document.getElementById("pw-input").focus();
+  } else {
+    showPanel();
+  }
+}
+
+function closeAdmin() {
+  document.getElementById("admin-overlay").classList.remove("open");
+}
+
+document.getElementById("admin-overlay").addEventListener("click", function(e) {
+  if (e.target === this) closeAdmin();
+});
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+function doLogin() {
+  const pw = document.getElementById("pw-input").value;
+  if (pw === D.password) {
+    loggedIn = true;
+    document.getElementById("login-error").style.display = "none";
+    document.getElementById("pw-input").value = "";
+    showPanel();
+  } else {
+    document.getElementById("login-error").style.display = "block";
+  }
+}
+
+function doLogout() {
+  loggedIn = false;
+  closeAdmin();
+}
+
+// ── Show panel & populate fields ──────────────────────────────────────────────
+function showPanel() {
+  document.getElementById("login-section").style.display = "none";
+  document.getElementById("panel-section").style.display = "block";
+  populatePanel();
+}
+
+function populatePanel() {
+  document.getElementById("a-page-title").value = D.pageTitle;
+  document.getElementById("a-announcement").value = D.announcement;
+  document.getElementById("a-badge").value = D.badge;
+  document.getElementById("a-title").value = D.heroTitle;
+  document.getElementById("a-sub").value = D.heroSub;
+  document.getElementById("a-brand").value = D.brand;
+  document.getElementById("a-pname").value = D.productName;
+  document.getElementById("a-orig-price").value = D.origPrice;
+  document.getElementById("a-sale-price").value = D.salePrice;
+  document.getElementById("a-sale-badge").value = D.saleBadge;
+  document.getElementById("a-desc").value = D.desc;
+  document.getElementById("a-payment-note").value = D.paymentNote;
+  document.getElementById("a-cart-text").value = D.cartText;
+  document.getElementById("a-cart-url").value = D.cartUrl;
+  document.getElementById("a-buy-text").value = D.buyText;
+  document.getElementById("a-buy-url").value = D.buyUrl;
+  document.getElementById("a-main-img").value = D.mainImg;
+  document.getElementById("a-why-title").value = D.whyTitle;
+  document.getElementById("a-why-sub").value = D.whySub;
+  document.getElementById("a-test-title").value = D.testimonialsTitle;
+  document.getElementById("a-footer-brand").value = D.footerBrand;
+  document.getElementById("a-footer-text").value = D.footerText;
+  renderThumbAdmin();
+  renderFeaturesAdmin();
+  renderTestimonialsAdmin();
+}
+
+// ── Live update ───────────────────────────────────────────────────────────────
+function liveUpdate() {
+  D.pageTitle = document.getElementById("a-page-title").value;
+  D.announcement = document.getElementById("a-announcement").value;
+  D.badge = document.getElementById("a-badge").value;
+  D.heroTitle = document.getElementById("a-title").value;
+  D.heroSub = document.getElementById("a-sub").value;
+  D.brand = document.getElementById("a-brand").value;
+  D.productName = document.getElementById("a-pname").value;
+  D.origPrice = document.getElementById("a-orig-price").value;
+  D.salePrice = document.getElementById("a-sale-price").value;
+  D.saleBadge = document.getElementById("a-sale-badge").value;
+  D.desc = document.getElementById("a-desc").value;
+  D.paymentNote = document.getElementById("a-payment-note").value;
+  D.cartText = document.getElementById("a-cart-text").value;
+  D.cartUrl = document.getElementById("a-cart-url").value;
+  D.buyText = document.getElementById("a-buy-text").value;
+  D.buyUrl = document.getElementById("a-buy-url").value;
+  D.mainImg = document.getElementById("a-main-img").value;
+  D.whyTitle = document.getElementById("a-why-title").value;
+  D.whySub = document.getElementById("a-why-sub").value;
+  D.testimonialsTitle = document.getElementById("a-test-title").value;
+  D.footerBrand = document.getElementById("a-footer-brand").value;
+  D.footerText = document.getElementById("a-footer-text").value;
+  renderStore();
+}
+
+// ── Thumbnail admin ───────────────────────────────────────────────────────────
+function renderThumbAdmin() {
+  const list = document.getElementById("thumb-admin-list");
+  list.innerHTML = "";
+  D.thumbs.forEach((url, i) => {
+    const item = document.createElement("div");
+    item.className = "thumb-admin-item";
+    item.innerHTML = `
+      <img class="thumb-preview" src="${url}" onerror="this.style.opacity=0.2">
+      <button class="thumb-remove" onclick="removeThumb(${i})">✕</button>
+      <input class="field-input" type="url" value="${url}" placeholder="Image URL" oninput="updateThumb(${i}, this.value)">`;
+    list.appendChild(item);
+  });
+}
+
+function updateThumb(i, val) {
+  D.thumbs[i] = val;
+  renderThumbAdmin();
+  renderStore();
+}
+
+function removeThumb(i) {
+  D.thumbs.splice(i, 1);
+  renderThumbAdmin();
+  renderStore();
+}
+
+function addThumb() {
+  D.thumbs.push("");
+  renderThumbAdmin();
+}
+
+// ── Features admin ────────────────────────────────────────────────────────────
+function renderFeaturesAdmin() {
+  const cont = document.getElementById("features-admin");
+  cont.innerHTML = "";
+  D.features.forEach((f, i) => {
+    const item = document.createElement("div");
+    item.className = "feature-admin-item";
+    item.innerHTML = `
+      <div class="field-row" style="grid-template-columns:60px 1fr;margin-bottom:8px;">
+        <div>
+          <label class="field-label">Icon</label>
+          <input class="field-input" type="text" value="${f.icon}" oninput="updateFeature(${i},'icon',this.value)">
+        </div>
+        <div>
+          <label class="field-label">Title</label>
+          <input class="field-input" type="text" value="${f.title}" oninput="updateFeature(${i},'title',this.value)">
+        </div>
+      </div>
+      <label class="field-label">Description</label>
+      <textarea class="field-input" style="min-height:60px;" oninput="updateFeature(${i},'desc',this.value)">${f.desc}</textarea>
+      <button class="remove-btn" style="margin-top:8px;" onclick="removeFeature(${i})">Remove</button>`;
+    cont.appendChild(item);
+  });
+}
+
+function updateFeature(i, key, val) {
+  D.features[i][key] = val;
+  renderStore();
+}
+
+function removeFeature(i) {
+  D.features.splice(i, 1);
+  renderFeaturesAdmin();
+  renderStore();
+}
+
+function addFeature() {
+  D.features.push({ icon: "✨", title: "NEW FEATURE", desc: "Describe this feature." });
+  renderFeaturesAdmin();
+  renderStore();
+}
+
+// ── Testimonials admin ────────────────────────────────────────────────────────
+function renderTestimonialsAdmin() {
+  const cont = document.getElementById("testimonials-admin");
+  cont.innerHTML = "";
+  D.testimonials.forEach((t, i) => {
+    const item = document.createElement("div");
+    item.className = "feature-admin-item";
+    item.innerHTML = `
+      <label class="field-label">Review Text</label>
+      <textarea class="field-input" style="min-height:60px;margin-bottom:8px;" oninput="updateTest(${i},'text',this.value)">${t.text}</textarea>
+      <label class="field-label">Author</label>
+      <input class="field-input" type="text" value="${t.author}" oninput="updateTest(${i},'author',this.value)">
+      <button class="remove-btn" style="margin-top:8px;" onclick="removeTest(${i})">Remove</button>`;
+    cont.appendChild(item);
+  });
+}
+
+function updateTest(i, key, val) {
+  D.testimonials[i][key] = val;
+  renderStore();
+}
+
+function removeTest(i) {
+  D.testimonials.splice(i, 1);
+  renderTestimonialsAdmin();
+  renderStore();
+}
+
+function addTestimonial() {
+  D.testimonials.push({ text: "Amazing product!", author: "— @customer" });
+  renderTestimonialsAdmin();
+  renderStore();
+}
+
+// ── Save ──────────────────────────────────────────────────────────────────────
+function saveAll() {
+  const newPw = document.getElementById("a-new-pw").value;
+  if (newPw.trim()) D.password = newPw.trim();
+  localStorage.setItem("store_data", JSON.stringify(D));
+  const banner = document.getElementById("save-banner");
+  banner.style.display = "block";
+  setTimeout(() => banner.style.display = "none", 3000);
+  showToast("✓ Saved!");
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+// ── Scroll reveal ─────────────────────────────────────────────────────────────
+const revealEls = document.querySelectorAll(".reveal");
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+}, { threshold: 0.1 });
+revealEls.forEach(el => obs.observe(el));
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+renderStore();
+</script>
+</body>
+</html>
